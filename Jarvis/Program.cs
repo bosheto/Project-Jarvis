@@ -12,10 +12,20 @@ namespace Jarvis
 {
     class Program
     {
+
+        //Version
+        string version = "1.0";
         //Window Height and Widght
-       private static int _height = 10;
-       private static int _widght = 40;
-       static SpeechSynthesizer synth = new SpeechSynthesizer();
+        private static int _height = 10;
+        private static int _widght = 40;
+        //Create a Speaech Synthesizer
+        static SpeechSynthesizer synth = new SpeechSynthesizer();
+        
+
+        //User Choise bools
+        static bool MonitorCpu = true;
+        static bool MonitorRam = true;
+
 
         // Entry Point
         static void Main(string[] args)
@@ -42,18 +52,20 @@ namespace Jarvis
             //Main Program Loop(infinite)
             while (true)
             {
-                float CPULoad = cpuPefr.NextValue();
+                int CPULoad = (int)cpuPefr.NextValue();
                 float RAMFree = memPefr.NextValue();
 
                 //Check if user has set cpu monitoring to true 
+                if(MonitorCpu == true)
                 {   
                     //Print CPU Load
                     Console.WriteLine("CPU Load: {0}", CPULoad + " %");
                 }
                 //Check if user has set ram monitoring to true 
+                if(MonitorRam == true)
                 {
                     //Print available Ram 
-                    Console.WriteLine("Available Memory: {0}", RAMFree);
+                    Console.WriteLine("Available Memory: {0} MB", RAMFree );
                 }
                 Console.WriteLine("--------------------------------");
                 
