@@ -1,10 +1,4 @@
 ﻿using System;
-
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Diagnostics;
 using System.Threading;
 using System.Speech.Synthesis;
@@ -14,10 +8,12 @@ namespace Jarvis
     {
 
         //Version
-        string version = "1.0";
+        static string version = "1.0";
         //Window Height and Widght
         private static int _height = 10;
         private static int _widght = 40;
+        //Debug mode var
+        private static bool debugMode = true;
         //Create a Speaech Synthesizer
         static SpeechSynthesizer synth = new SpeechSynthesizer();
         
@@ -35,10 +31,9 @@ namespace Jarvis
             
             //Set up Window size
             Console.SetWindowSize(_widght,_height);
-            
-
+             
             //Send Voice message to User
-            Speak("System monitor enabled" , 1 , VoiceGender.Female);
+            Speak("System monitor version"+ version +"enabled"  , 1 , VoiceGender.Female);
 
             #region Perfomance Counters 
 
@@ -98,7 +93,11 @@ namespace Jarvis
         #region Speak()
         static void Speak(string Message)//Only requires a Messege
         {
-            synth.Speak(Message);
+            //Check if debug mode is on or off 
+            if (debugMode == false)
+            {
+                synth.Speak(Message);
+            }
         }
         static void Speak(string Message, int Rate)//Requires Message and Rate
         {
