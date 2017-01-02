@@ -8,27 +8,26 @@ namespace Jarvis
     {
 
         //Version
-        static string version = "1.0.1";
+        static string version = "1.0.2";
         //Window Height and Widght
         private static int _height = 10;
         private static int _widght = 40;
-        //Debug mode var
+        //Debug mode On or Off
         private static bool debugMode = false;
+        //SilentMode On or Off
         private static bool silentMode = true;
         //Create a Speaech Synthesizer
         static SpeechSynthesizer synth = new SpeechSynthesizer();
         
 
-        //User Choise bools
-        static bool MonitorCpu = true;
-        static bool MonitorRam = true;
+   
 
 
         // Entry Point
         static void Main(string[] args)
 
         {
-
+            Console.SetWindowSize(_widght,_height);
             //Print out Program version
             Console.WriteLine("Jarvis version {0}", version);
 
@@ -37,7 +36,6 @@ namespace Jarvis
             
             //Perfomance Counters
             #region Perfomance Counters 
-
             //Get CPU load
             PerformanceCounter cpuPefr = new PerformanceCounter("Processor Information" , "% Processor Time" , "_Total");
             //Get Available Memory
@@ -55,13 +53,9 @@ namespace Jarvis
                 Console.WriteLine("CPU load: {0} %", CPULoad);
 
                 //Print available Ram 
-                Console.WriteLine("Available memory: {0} MB", RAMFree );
-              
-                
-            
+                Console.WriteLine("Available memory: {0} MB", RAMFree ); 
+                                   
                 //Curent values Speach
-                
-
                 if (CPULoad > 80)
                 {
                     if (CPULoad == 100)
