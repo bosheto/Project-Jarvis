@@ -12,20 +12,22 @@ namespace Jarvis
         //Window Height and Widght
         private static int _height = 10;
         private static int _widght = 40;
-        //Debug mode On or Off
-        private static bool debugMode = true;
-        //Silent Mode On or Off
-        private static bool silentMode = false;
+        //Debug mode var
+        private static bool debugMode = false;
+        private static bool silentMode = true;
         //Create a Speaech Synthesizer
         static SpeechSynthesizer synth = new SpeechSynthesizer();
-       
+        
+
+        //User Choise bools
+        static bool MonitorCpu = true;
+        static bool MonitorRam = true;
+
 
         // Entry Point
         static void Main(string[] args)
 
         {
-            //Setup window size 
-            Console.SetWindowSize(_widght , _height);
 
             //Print out Program version
             Console.WriteLine("Jarvis version {0}", version);
@@ -58,6 +60,8 @@ namespace Jarvis
                 
             
                 //Curent values Speach
+                
+
                 if (CPULoad > 80)
                 {
                     if (CPULoad == 100)
@@ -72,7 +76,7 @@ namespace Jarvis
                        Speak(CPUVocalMessage);
                     }
                 }
-                Console.WriteLine("-------------------------------");
+                Console.WriteLine("--------------------------------");
                 Thread.Sleep(1000);
             }//END OF LOOP
 
