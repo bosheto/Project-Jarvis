@@ -4,16 +4,17 @@ using System.Threading;
 using System.Speech.Synthesis;
 namespace Jarvis
 {
-    class Program
+    class ProgramMain
     {
 
         //Version
-        static string version = "1.0";
+        static string version = "1.0.1";
         //Window Height and Widght
         private static int _height = 10;
         private static int _widght = 40;
         //Debug mode var
-        private static bool debugMode = true;
+        private static bool debugMode = false;
+        private static bool silentMode = true;
         //Create a Speaech Synthesizer
         static SpeechSynthesizer synth = new SpeechSynthesizer();
         
@@ -27,14 +28,14 @@ namespace Jarvis
         static void Main(string[] args)
 
         {
-            
-            
-            //Set up Window size
-            Console.SetWindowSize(_widght,_height);
-             
+
+            //Print out Program version
+            Console.WriteLine("Jarvis version {0}", version);
+
             //Send Voice message to User
             Speak("System monitor version"+ version +"enabled"  , 1 , VoiceGender.Female);
-
+            
+            //Perfomance Counters
             #region Perfomance Counters 
 
             //Get CPU load
@@ -43,26 +44,19 @@ namespace Jarvis
             PerformanceCounter memPefr = new PerformanceCounter("Memory", "Available MBytes");
 
             #endregion
-
+          
             //Main Program Loop(infinite)
             while (true)
             {
                 int CPULoad = (int)cpuPefr.NextValue();
                 float RAMFree = memPefr.NextValue();
 
-                //Check if user has set cpu monitoring to true 
-                if(MonitorCpu == true)
-                {   
-                    //Print CPU Load
-                    Console.WriteLine("CPU Load: {0}", CPULoad + " %");
-                }
-                //Check if user has set ram monitoring to true 
-                if(MonitorRam == true)
-                {
-                    //Print available Ram 
-                    Console.WriteLine("Available Memory: {0} MB", RAMFree );
-                }
-                Console.WriteLine("--------------------------------");
+                //Print CPU Load
+                Console.WriteLine("CPU load: {0} %", CPULoad);
+
+                //Print available Ram 
+                Console.WriteLine("Available memory: {0} MB", RAMFree );
+              
                 
             
                 //Curent values Speach
@@ -82,7 +76,7 @@ namespace Jarvis
                        Speak(CPUVocalMessage);
                     }
                 }
-               
+                Console.WriteLine("--------------------------------");
                 Thread.Sleep(1000);
             }//END OF LOOP
 
@@ -93,10 +87,14 @@ namespace Jarvis
         #region Speak()
         static void Speak(string Message)//Only requires a Messege
         {
-            //Check if debug mode is on or off 
-            if (debugMode == false)
+            //Check if Silent mode is on or off 
+            if (silentMode == false)
             {
-                synth.Speak(Message);
+                //Check if debug mode is on or off 
+                if (debugMode == false)
+                {
+                    synth.Speak(Message);
+                }
             }
         }
         static void Speak(string Message, int Rate)//Requires Message and Rate
