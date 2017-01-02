@@ -9,9 +9,6 @@ namespace Jarvis
 
         //Version
         static string version = "1.0.2";
-        //Window Height and Widght
-        private static int _height = 10;
-        private static int _widght = 40;
         //Debug mode On or Off
         private static bool debugMode = false;
         //SilentMode On or Off
@@ -27,7 +24,6 @@ namespace Jarvis
         static void Main(string[] args)
 
         {
-            Console.SetWindowSize(_widght,_height);
             //Print out Program version
             Console.WriteLine("Jarvis version {0}", version);
 
