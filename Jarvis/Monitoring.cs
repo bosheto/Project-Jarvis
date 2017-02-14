@@ -9,13 +9,15 @@ namespace Jarvis
 		//Debug mode On or Off
 		private static bool debugMode = false;
 		//SilentMode On or Off
-		private static bool silentMode = false;
+		private static bool silentMode ;
 		//Program version
 		string version;
 		//Create a Speaech Synthesizer
 		static SpeechSynthesizer synth = new SpeechSynthesizer();
+        //Cpu warning var
+        int cpuWarning;
 
-
+        //Create CPU Performance Counter
 		PerformanceCounter cpuPefr = new PerformanceCounter("Processor Information", "% Processor Time", "_Total");
 		//Get Available Memory
 		PerformanceCounter memPefr = new PerformanceCounter("Memory", "Available MBytes");
@@ -46,13 +48,18 @@ namespace Jarvis
 		}
 		#endregion
 
-		public Monitoring(string _version)
+		public Monitoring(string _version, bool _debugMode)
 		{
-			
+            debugMode = _debugMode;
+
 			//Get SilentMode value and convert it to float 
 			int _SilentMode = Int16.Parse(System.Configuration.ConfigurationManager.AppSettings["SilentMode"]);
 
-			if (_SilentMode == 1) { silentMode = true; }
+            int _CpuWarning = Int16.Parse(System.Configuration.ConfigurationManager.AppSettings["CpuWarning"]);
+
+            cpuWarning = _CpuWarning;
+
+            if (_SilentMode == 1) { silentMode = true; }
 			//Set version number 
 			version = _version;
 			//Print version number
@@ -73,11 +80,10 @@ namespace Jarvis
 			//Print available Ram 
 			Console.WriteLine("Available memory: {0} MB", RAMFree);
 
-			if (CPULoad > 80)
+			if (CPULoad > cpuWarning)
 			{
 				if (CPULoad == 100)
 				{
-
 					string CPUVocalMessage = String.Format("Warnig maximum cpu load");
 					Speak(CPUVocalMessage);
 				}
